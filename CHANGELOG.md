@@ -4,6 +4,7 @@
 
 ### Changed
 
+  - The implementation of `mod_pow2` is tail-recursive
   - The implementation of `shiftr_nat` is more efficient
 
 ## [v3.4] — 2026-03-10

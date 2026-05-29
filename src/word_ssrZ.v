@@ -430,14 +430,40 @@ Qed.
 
 (* -------------------------------------------------------------------- *)
 (* Truncate a positive to its n least significant bits *)
-Fixpoint mod_pow2 (p: positive) (n: nat) {struct n} : N :=
+Fixpoint mod_pow2' (p: positive) (n: nat) {struct n} : N :=
   (if n is n.+1 then
      match p with
-     | p~0 => Pos.Ndouble (mod_pow2 p n)
-     | p~1 => Pos.Nsucc_double (mod_pow2 p n)
+     | p~0 => Pos.Ndouble (mod_pow2' p n)
+     | p~1 => Pos.Nsucc_double (mod_pow2' p n)
      | 1 => 1%N
      end%positive
    else 0)%N.
+
+Section CPS.
+
+Context {A: Type}.
+
+Fixpoint mod_pow2k (p: positive) (n: nat) (k: N -> A) {struct n} : A :=
+  (if n is n.+1 then
+     match p with
+     | p~0 => mod_pow2k p n (fun r => k (N.double r))
+     | p~1 => mod_pow2k p n (fun r => k (Pos.Nsucc_double r))
+     | 1 => k 1%N
+     end%positive
+   else k 0)%N.
+
+Lemma mod_pow2kE p n k :
+  mod_pow2k p n k = k (mod_pow2' p n).
+Proof. by elim: n p k => [ // | n ih ] [ p | p | // ] k /= ; rewrite ih. Qed.
+
+End CPS.
+
+Definition mod_pow2 (p: positive) (n: nat) : N :=
+  mod_pow2k p n id.
+
+Lemma mod_pow2_alt p n :
+  mod_pow2 p n = mod_pow2' p n.
+Proof. exact: mod_pow2kE. Qed.
 
 Definition zmod_pow2 (z: Z) (n: nat) : Z :=
   match z with
@@ -474,6 +500,7 @@ Qed.
 Lemma mod_pow2E p n :
   (mod_pow2 p n = Npos p mod Npos (shift_nat n 1))%N.
 Proof.
+  rewrite mod_pow2_alt.
   elim: n p.
   + by move => p; rewrite N.mod_1_r.
     move => n ih [ p | p | ] /=; last by rewrite N.mod_1_l.
