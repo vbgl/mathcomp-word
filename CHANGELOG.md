@@ -1,5 +1,11 @@
 # Changelog
 
+## [unreleased]
+
+### Removed
+
+  - Support for Coq 8.16
+
 ## [v3.5] — 2026-07-23
 
 ### Added
