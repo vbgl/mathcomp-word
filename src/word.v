@@ -606,8 +606,9 @@ Qed.
 Local Lemma ge0_bit k b : (0 <= 2%:R ^+ k * b%:R :> Z)%R.
 Proof. by rewrite mulr_ge0 // ?exprn_ge0 // ler0n. Qed.
 
-Definition wbit (z : Z) (n : nat) : bool :=
-  nosimpl (Z.testbit z (Z.of_nat n)).
+Definition wbit (z : Z) (n : nat) : bool := Z.testbit z (Z.of_nat n).
+
+Arguments wbit : simpl never.
 
 Lemma wbit0 i : wbit 0 i = false.
 Proof. by rewrite /wbit Z.testbit_0_l. Qed.
@@ -1039,8 +1040,9 @@ rewrite exprD (lt_le_trans h) // modulusE ler_peMr //.
 + by apply/exprn_ge0. + by apply/exprn_ege1.
 Qed.
 
-Definition w0extend :=
-  nosimpl (fun p w => mkWord (w0extend_subproof p w)).
+Definition w0extend p w := mkWord (w0extend_subproof p w).
+
+Arguments w0extend : simpl never.
 
 Definition wbit_w0extend (p : nat) (w : n.-word) i :
   wbit (w0extend p w) i = if i < n then wbit w i else false.
@@ -1081,9 +1083,13 @@ apply/andP; split => //; rewrite [Z.lxor _ _](@z2sumE n)//.
 + by rewrite modulusE le2Xn_sumbitsZ.
 Qed.
 
-Definition wand := nosimpl (fun w1 w2 => mkWord (wand_subproof w1 w2)).
-Definition wor  := nosimpl (fun w1 w2 => mkWord (wor_subproof  w1 w2)).
-Definition wxor := nosimpl (fun w1 w2 => mkWord (wxor_subproof w1 w2)).
+Definition wand w1 w2 := mkWord (wand_subproof w1 w2).
+Definition wor  w1 w2 := mkWord (wor_subproof  w1 w2).
+Definition wxor w1 w2 := mkWord (wxor_subproof w1 w2).
+
+Arguments wand : simpl never.
+Arguments wor  : simpl never.
+Arguments wxor : simpl never.
 
 (* -------------------------------------------------------------------- *)
 Lemma urepr_wand (w1 w2 : n.-word) :
