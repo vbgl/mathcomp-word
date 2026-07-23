@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Added
+
+  - Lemma `wbit_spec` gives a specification of `wbit`.
+
 ### Changed
 
   - The implementation of `mod_pow2` is tail-recursive
