@@ -8,7 +8,8 @@
 
 ### Removed
 
-  - Support for Coq 8.16
+  - Support for mathcomp 2.0 — 2.3
+  - Support for Coq 8.16 – 8.18
 
 ## [v3.5] — 2026-07-23
 
