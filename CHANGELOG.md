@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Added
+
+  - Explicit support for mathcomp 2.6 and Rocq 9.2
+
 ### Removed
 
   - Support for Coq 8.16
