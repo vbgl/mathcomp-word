@@ -1,6 +1,6 @@
 (coq.theory
  (name mathcomp.word)
- (theories elpi HB mathcomp.ssreflect mathcomp.fingroup mathcomp.algebra)
+ (theories elpi elpi_elpi HB mathcomp.ssreflect mathcomp.fingroup mathcomp.algebra)
  (plugins elpi)
  (package coq-mathcomp-word)
  (flags -w -ambiguous-paths
