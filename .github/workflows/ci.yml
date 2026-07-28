@@ -23,6 +23,10 @@ jobs:
           startGroup "Workaround permission issue"
             sudo chown -R 1000:1000 .
           endGroup
+          startGroup "Unpin dune"
+            opam unpin dune
+            opam pin add -n -k version dune 3.21.1
+          endGroup
     - name: Revert permissions
       if: ${{ always() }}
       run: sudo chown -R 1001:116 .
