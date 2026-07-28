@@ -1,3 +1,3 @@
 (lang dune 3.21)
-(using coq 0.3)
+(using rocq 0.11)
 (name coq-mathcomp-word)

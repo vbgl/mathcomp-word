@@ -1,5 +1,6 @@
-(coq.theory
+(rocq.theory
  (name mathcomp.word)
+ (theories elpi elpi_elpi HB Stdlib mathcomp.ssreflect mathcomp.order mathcomp.algebra mathcomp.fingroup)
  (package coq-mathcomp-word)
  (flags -w -ambiguous-paths
         -w -hiding-delimiting-key
