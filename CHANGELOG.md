@@ -11,6 +11,10 @@
   - Support for mathcomp 2.0 — 2.3
   - Support for Coq 8.16 – 8.18
 
+### Changed
+
+  - The implementation of `wbit` (`lsb`, `msb`) is more efficient
+
 ## [v3.5] — 2026-07-23
 
 ### Added

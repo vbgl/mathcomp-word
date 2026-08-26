@@ -525,3 +525,35 @@ Proof.
 Qed.
 
 Global Opaque zmod_pow2.
+
+(* -------------------------------------------------------------------- *)
+(* Returns the n-th significant bit of a positive binary number *)
+Fixpoint testbit_pos (p: positive) (n: nat) {struct p} : bool :=
+  match p, n with
+  | (1 | _~1), O => true
+  | 1, _.+1 | _~0, O => false
+  | (p~1 | p~0), n.+1 => testbit_pos p n
+  end%positive.
+
+Lemma testbit_posE p n :
+  testbit_pos p n = Pos.testbit p (N.of_nat n).
+Proof.
+  elim: p n => [ p ih | p ih | ]; case => // n /=;
+  rewrite ih; f_equal; Lia.lia.
+Qed.
+
+(* Same as Z.testbit for non-negative numbers, without a nat ↔ Z roundtrip *)
+Definition testbit (a: Z) (n: nat) : bool :=
+  match a with
+  | Z0 => false
+  | Zpos p => testbit_pos p n
+  | Zneg _ => Z.testbit a (Z.of_nat n)
+  end.
+
+Lemma testbitE a n :
+  testbit a n = Z.testbit a (Z.of_nat n).
+Proof.
+  case: a => [ | a | // ].
+  - by rewrite Z.bits_0.
+  by rewrite /= testbit_posE; case: n => //=; case: a.
+Qed.

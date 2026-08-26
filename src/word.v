@@ -606,13 +606,15 @@ Qed.
 Local Lemma ge0_bit k b : (0 <= 2%:R ^+ k * b%:R :> Z)%R.
 Proof. by rewrite mulr_ge0 // ?exprn_ge0 // ler0n. Qed.
 
-Definition wbit (z : Z) (n : nat) : bool := Z.testbit z (Z.of_nat n).
+Definition wbit (z : Z) (n : nat) : bool := testbit z n.
 
 Arguments wbit : simpl never.
 
 Lemma wbit_spec z i :
   wbit z i = Z.testbit z (Z.of_nat i).
-Proof. by []. Qed.
+Proof. by rewrite -testbitE. Qed.
+
+Global Opaque wbit.
 
 Lemma wbit0 i : wbit 0 i = false.
 Proof. by rewrite wbit_spec Z.testbit_0_l. Qed.
